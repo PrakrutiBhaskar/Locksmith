@@ -1,9 +1,13 @@
+
+const passwordInput = document.getElementById("password");
+const scoreDiv = document.getElementById("score");
+const strengthDiv = document.getElementById("strength");
+const suggestionsDiv = document.getElementById("suggestions");
+
 function checkPassword() {
-    const password = document.getElementById("password").value;
-    const scoreDiv = document.getElementById("score");
-    const strengthDiv = document.getElementById("strength");
-    const suggestionsDiv = document.getElementById("suggestions");
-    
+    const password = passwordInput.value;
+
+    // Reset output
     suggestionsDiv.innerHTML = '';
     scoreDiv.textContent = '';
     strengthDiv.textContent = '';
@@ -22,7 +26,7 @@ function checkPassword() {
     if (length >= 8) score++;
     if (length >= 12) score++;
     if (length >= 16) score++;
-    if (length >= 20) score++; // Extra point for strong length
+    if (length >= 20) score++;
 
     // Character diversity scoring
     score += characters.filter(Boolean).length;
@@ -30,34 +34,34 @@ function checkPassword() {
     // Bonus if all character categories are present
     if (characters.every(Boolean)) score++;
 
-    // Display score and strength separately
+    // Display score
     scoreDiv.textContent = `Score: ${score}/9`;
 
+    // Strength interpretation
     let strength = '';
     let color = '';
 
-    // Strength interpretation and color mapping
     if (score <= 2) {
         strength = "Very Weak";
-        color = "red"; // deep red
+        color = "red"; 
     } else if (score <= 4) {
         strength = "Weak";
-        color = "orange"; // reddish orange
+        color = "orange"; 
     } else if (score <= 5) {
         strength = "Moderate";
-        color = "yellow"; // orange
+        color = "yellow"; 
     } else if (score <= 7) {
         strength = "Strong";
-        color = "#22c55e"; // green
+        color = "#22c55e";
     } else {
         strength = "Very Strong";
-        color = "#16a34a"; // darker green
+        color = "#16a34a"; 
     }
 
     strengthDiv.textContent = `Password strength: ${strength}`;
     strengthDiv.style.color = color;
 
-    // Feedback for improvement
+    // Feedback
     if (score <= 5) {
         let suggestions = "<strong>Suggestions:</strong><br>";
         if (!upper_case) suggestions += "- Add uppercase letters.<br>";
@@ -70,3 +74,12 @@ function checkPassword() {
         suggestionsDiv.innerHTML = suggestions;
     }
 }
+
+// Trigger check when Enter is pressed
+passwordInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // avoid form submission if inside a form
+        checkPassword();
+    }
+});
+
