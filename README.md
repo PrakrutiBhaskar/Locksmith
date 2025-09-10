@@ -59,10 +59,3 @@ Locksmith scores your password based on:
 
 ---
 
-## 📁 File Structure
-
-locksmith/
-├── index.html # Main HTML file
-├── style.css # (Optional) Styling for visuals
-├── script.js # Core password strength logic
-└── README.md # Project documentation
